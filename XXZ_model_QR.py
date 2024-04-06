@@ -9,11 +9,11 @@ def _r_matrix_xxz(root, delta, type='Rapidities'):
     Args:
         root (complex): root of the Bethe equations.
         delta (float): anisotropy in the XXZ model.
+        type (str, optional): Specifies the type of the root. Defaults to 'Rapidities'. Other option is 'Momentum'.
 
     Returns:
-        R matrix. 
+        (array): The R matrix. 
     """
-
     r_matrix = np.eye(4, dtype=np.complex128)
 
     if type == 'Rapidities':
@@ -44,10 +44,11 @@ def RT(roots, delta, type):
 
     Args:
         root (complex): root of the Bethe equations.
-        delta (float): Anisotropy Delta.
+        delta (float): anisotropy in the XXZ model.
+        type (str, optional): Specifies the type of the root. Defaults to 'Rapidities'. Other option is 'Momentum'.
 
     Returns:
-        r_matrix (array): R matrix.
+        (array): R_T matrix.
     """
     Id = np.identity(2)
     nmagnons = len(roots)
@@ -70,17 +71,19 @@ def RT(roots, delta, type):
     p = A[0]
     for k in range(1, nmagnons):
         p = p @ A[k]
+
     return p
 
 
-def get_Pk_Gk(nspins, roots, delta, type='Rapidities'):
+def get_P_G(nspins, roots, delta, type='Rapidities'):
     """
     P_k and G_k matrices.
 
     Args:
         nspins (integer): number of sites.
         roots (array [nmagnons]): roots of the Bethe equations.
-        delta (float): Anisotropy Delta.
+        delta (float): anisotropy in the XXZ model.
+        type (str, optional): Specifies the type of the root. Defaults to 'Rapidities'. Other option is 'Momentum'.
 
     Returns:
         [P_k (list), G_k (list)]: P_k and G_k matrices.
@@ -103,4 +106,5 @@ def get_Pk_Gk(nspins, roots, delta, type='Rapidities'):
         Pj1[:, 0:2 ** nmagnons] = Pj
         Gs.append(Gj)
         Ps.append(Pj1)
+        
     return [Ps, Gs]
