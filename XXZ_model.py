@@ -99,37 +99,7 @@ class XXZ_model:
 
     def a(self, x, y):
         return 1 + x*y - 2*self.delta*y
-
-    def Crk_xy1(self, r, k, x, y):
-        if r == 0:
-            c = 1
-            return c
-        elif k == 0:
-            if r == 1:
-                c = 1
-            else:
-                c = 0
-            return c
-        elif r == 1:
-            c = self.Crk_xy1(r, k-1, x, y)*x[0]*np.conjugate(y[0])+1
-            return c
-        result = 0
-        for n in range(r):
-            for m in range(r):
-                sign = (-1)**(n+m)
-                index_i = list(range(n)) + list(range(n+1, r))
-                index_j = list(range(m)) + list(range(m+1, r))
-                ai = np.prod([self.a(x[j], x[n]) for j in index_i])
-                aj = np.prod([self.a(y[j], y[m]) for j in index_j])
-                yin = x[index_i]
-                yjm = y[index_j]
-                result += sign*ai * \
-                    np.prod(yin)*np.conjugate(aj*np.prod(yjm)) * \
-                    self.Crk_xy1(r-1, k-1, yin, yjm)
-        c = self.Crk_xy1(r, k-1, x, y)*np.prod(x) * \
-            np.conjugate(np.prod(y)) + result
-        return c
-
+    
     def _get_index1(self, r, k):
         def gen_l(l, j):
             l = np.array(l)
