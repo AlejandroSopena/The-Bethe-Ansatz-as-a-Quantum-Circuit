@@ -15,6 +15,7 @@ This repository contains the code to reproduce the numerical implementations pre
 [`XXZ_model.py`](https://github.com/AlejandroSopena/The-Bethe-Ansatz-as-a-Quantum-Circuit/blob/main/XXZ_model.py) contains a class to generate the unitary matrices $P_k$ (unitaries for $k < M$ and isometries $P_k|0\rangle$ for $k\geq M$) derived from the $\Lambda$ tensors.
 ```python
 from XXZ_model import XXZ_model
+from utils import unitarize_pink, check_unitariry
 
 nspins = 4
 nmagnons = 2
@@ -28,11 +29,18 @@ t.get_indexes()
 P_xxz = []
 for k in range(1, nspins):
     P_xxz.append(t.get_Pk_matrix(k=k, a=True, b=True))
+
+for k in range(nmagnons-1, nspins-1):
+    P_xxz[k] = unitarize_pink(P_xxz[k])
+
+for k in range(nspins-1):
+    print(check_unitariry(P_xxz[k]))
 ```
 
 [`XXZ_model_QR.py`](https://github.com/AlejandroSopena/The-Bethe-Ansatz-as-a-Quantum-Circuit/blob/main/XXZ_model_QR.py) contains the functions to generate the matrices $P_k$ derived from the $\Gamma$ tensors using the QR decomposition.
 ```python
 from XXZ_model_QR import get_P_G
+from utils import unitarize_pink, check_unitariry
 
 nspins = 4
 roots = [-0.574, 0.574]
@@ -40,6 +48,12 @@ delta = 0.5
 roots = [-0.574, 0.574]
 
 P_xxz_qr = get_P_G(nspins, roots, delta)[0]
+
+for k in range(nmagnons-1, nspins-1):
+    P_xxz_qr[k] = unitarize_pink(P_xxz_qr[k])
+
+for k in range(nspins-1):
+    print(check_unitariry(P_xxz_qr[k]))
 ```
 
 [`XX_model.py`](https://github.com/AlejandroSopena/The-Bethe-Ansatz-as-a-Quantum-Circuit/blob/main/XX_model.py) contains a class to generate the quantum circuit to prepare Bethe eigensates of the XX model. These circuits are efficient in the number of qubits and magnons.
