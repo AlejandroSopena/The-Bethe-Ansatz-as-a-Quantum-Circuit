@@ -1,7 +1,7 @@
 # The Bethe Ansatz as a Quantum Circuit
 [![DOI](https://zenodo.org/badge/782965038.svg)](https://zenodo.org/doi/10.5281/zenodo.10936251)
 
-This repository contains the code to reproduce the numerical implementations presented in the manuscript ["The Bethe Ansatz as a Quantum Circuit"](https://arxiv.org/abs/2309.14430).
+This repository contains the code to reproduce the numerical implementations presented in the manuscript ["The Bethe Ansatz as a Quantum Circui"](https://arxiv.org/abs/2309.14430).
 
 
 ## Dependences
